@@ -1,0 +1,30 @@
+version: 2.1
+
+jobs:
+  run-trading-bot:
+    docker:
+      - image: cimg/python:3.9
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            python -m pip install --upgrade pip
+            pip install -r requirements.txt
+      - run:
+          name: Run trading bot
+          command: python main.py
+    working_directory: ~/project
+
+workflows:
+  version: 2
+  scheduled-runs:
+    triggers:
+      - schedule:
+          cron: "0 */4 * * *"  # Run every 4 hours
+          filters:
+            branches:
+              only:
+                - main
+    jobs:
+      - run-trading-bot 
