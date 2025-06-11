@@ -21,7 +21,7 @@ workflows:
   scheduled-runs:
     triggers:
       - schedule:
-          cron: "0 */4 * * *"  # Run every 4 hours
+          cron: "0 0,4,8,12,16,20 * * *"  # Run at 00:00, 04:00, 08:00, 12:00, 16:00, 20:00 UTC
           filters:
             branches:
               only:
